@@ -13,4 +13,5 @@ https://hack.codingblocks.com/app/contests/3553
 # Assignment 5
 https://hack.codingblocks.com/app/contests/3774
 
-#
+# Assignment 6
+https://hack.codingblocks.com/app/contests/3861
