@@ -14,11 +14,16 @@ https://hack.codingblocks.com/app/contests/3553
 # Assignment 5
 https://hack.codingblocks.com/app/contests/3774
 
-# Assignment 6
-https://hack.codingblocks.com/app/contests/3861
+
 
 
 # Sem-6
 
-# Assignment 1
+# Assignment 2
+https://hack.codingblocks.com/app/contests/3861
+
+# Assignment 3
 https://hack.codingblocks.com/app/contests/3909
+
+# Assignment 4
+https://hack.codingblocks.com/app/contests/4069
