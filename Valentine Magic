@@ -1,0 +1,44 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int m=sc.nextInt();
+        int[]boys=new int[n];
+        int[] girls=new int[m];
+
+        for(int i=0;i<n;i++){
+            boys[i]=sc.nextInt();
+        }
+
+        for(int i=0;i<m;i++){
+            girls[i]=sc.nextInt();
+        }
+        int[][] dp=new int[n+1][m+1];
+        for(int[]a:dp){
+            Arrays.fill(a,-1);
+        }
+        Arrays.sort(boys);
+        Arrays.sort(girls);
+
+        System.out.println(MinDiff(boys,girls,0,0,dp));
+
+    }
+
+    private static int MinDiff(int[] boys,int[] girls,int i,int j,int[][]dp){
+        if(i==boys.length){
+            return 0;
+        }
+        if(j==girls.length){
+            return 10000001;
+        }
+        if(dp[i][j]!=-1){
+            return dp[i][j];
+        }
+
+        int pair=Math.abs(boys[i]-girls[j])+MinDiff(boys,girls,i+1,j+1,dp);
+        int nopair=MinDiff(boys,girls,i,j+1,dp);
+
+        return dp[i][j]=Math.min(pair,nopair);
+    }
+}
