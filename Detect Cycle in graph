@@ -1,0 +1,67 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+    Scanner sc = new Scanner(System.in);
+    int testcase = sc.nextInt();
+    while(testcase-->0){
+      int V = sc.nextInt();
+      int edges = sc.nextInt();
+    
+      int[][] grid = new int[edges][2];
+
+      for(int i=0;i<edges;i++){
+        for(int j=0;j<2;j++){
+          grid[i][j] = sc.nextInt();
+        }
+      }
+
+    // int V = V;
+    boolean flag = false;
+    ArrayList<ArrayList<Integer>> adj = constructGraph(V,grid);
+    boolean[] vis = new boolean[V+1];
+        for(int currvertex=0;currvertex<=V;currvertex++){
+            if(!vis[currvertex]){
+                if(hasCycle(currvertex,-1,adj,vis)){
+          flag = true;
+          break;
+        }
+            }
+        }
+        if(flag)
+      System.out.println("yes");
+    else
+          System.out.println("no");
+    
+    }
+    }
+    
+    public static boolean hasCycle(int currvertex,int currparent,ArrayList<ArrayList<Integer>> adj,boolean[] vis){
+        vis[currvertex] = true;
+        
+        for(int currneighbour:adj.get(currvertex)){
+            if(!vis[currneighbour]){
+                if(hasCycle(currneighbour,currvertex,adj,vis))
+                    return true;
+            }
+            else if(currneighbour != currparent)
+                return true;
+        }
+        
+        return false;
+  }
+
+  public static ArrayList<ArrayList<Integer>> constructGraph(int V,int[][] dislikes){
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+
+        for(int i=0;i<=V;i++){
+            graph.add(new ArrayList<Integer>());
+        }
+        for(int[] curredge : dislikes){
+            int a = curredge[0];
+            int b = curredge[1];
+            graph.get(a).add(b);
+            graph.get(b).add(a);
+        }
+    return graph;
+    }
+}

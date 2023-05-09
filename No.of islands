@@ -1,0 +1,57 @@
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+        Scanner sc=new Scanner(System.in);
+        int m=sc.nextInt();
+        int n=sc.nextInt();
+
+        char[][]matrix=new char[m][n];
+        for(int i=0;i<m;i++){
+      String str=sc.next();
+            for(int j=0;j<str.length();j++){
+                   
+                matrix[i][j] = str.charAt(j);
+            }
+        }
+
+        System.out.println(countIslands(matrix));
+
+
+    }
+
+    public static int countIslands(char[][] matrix) {
+        int res=0;
+        int m=matrix.length;
+        int n=matrix[0].length;
+
+        for(int currentRow=0;currentRow<m;currentRow++){
+            for(int currentCol=0;currentCol<n;currentCol++){
+                if(matrix[currentRow][currentCol]=='1'){
+                    islandsink(matrix,currentRow,currentCol,m,n);
+                    res+=1;
+                }
+            }
+        }
+
+        return res;
+    }
+
+    public static void islandsink(char[][] matrix,int currentRow,int currentCol,int m,int n){
+        if(currentRow<0 || currentRow>=m || currentCol<0 || currentCol>=n || matrix[currentRow][currentCol]=='0'){
+            return;
+        }
+
+        matrix[currentRow][currentCol]='0';
+
+        islandsink(matrix,currentRow-1,currentCol,m,n);
+
+        islandsink(matrix,currentRow+1,currentCol,m,n);
+
+        islandsink(matrix,currentRow,currentCol-1,m,n);
+
+        islandsink(matrix,currentRow,currentCol+1,m,n);
+
+        return;
+
+    }
+}

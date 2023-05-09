@@ -1,0 +1,47 @@
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        int[][] matrix = new int[n][m];
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                matrix[i][j] = sc.nextInt();
+            }
+        }
+
+        
+        
+        int result=0;
+
+        for(int currow=0;currow<n;currow++){
+            for(int currcol=0;currcol<m;currcol++){
+                if(matrix[currow][currcol]==1){
+                    result=Math.max(result,islandsink(matrix,currow,currcol,n,m));
+                }
+            }
+        }
+
+        System.out.println(result);
+    }
+
+    public static int islandsink(int[][] matrix,int currow,int currcol,int m,int n){
+        if(currow<0 || currow>=m || currcol<0 || currcol>=n || matrix[currow][currcol]==0){
+            return 0;
+        }
+
+        matrix[currow][currcol]=0;
+
+        int Upmove=islandsink(matrix,currow-1,currcol,m,n);// Up call
+
+        int Downmove=islandsink(matrix,currow+1,currcol,m,n);// Downmove call
+
+        int leftmove=islandsink(matrix,currow,currcol-1,m,n);// leftmove call
+
+        int rightmove=islandsink(matrix,currow,currcol+1,m,n);// rightmove call
+
+        return (1+Upmove+Downmove+leftmove+rightmove);
+    }
+}

@@ -1,0 +1,99 @@
+import java.util.*;
+class Pair implements Comparable<Pair>{
+    int V;
+    int distance;
+    
+    Pair(int V,int distance){
+        this.V = V;
+        this.distance = distance;
+    }
+    
+    public int compareTo(Pair p){
+        return this.distance - p.distance;
+    }
+}
+
+public class Main {
+    public static void main(String args[]) {
+    Scanner sc=new Scanner(System.in);
+    int t=sc.nextInt();
+    while(t-->0){
+      int V=sc.nextInt();
+      int edges=sc.nextInt();
+      int[][] matrix=new int[edges][3];
+      for(int i=0;i<edges;i++){
+        for(int j=0;j<2;j++){
+          matrix[i][j]=sc.nextInt();
+        }
+      }
+      int src=sc.nextInt();
+      ArrayList<ArrayList<ArrayList<Integer>>> graph = Constructgraph(matrix,V);
+      dijkstra(V,graph,src);
+      System.out.println();
+    }
+}
+
+  static void dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S)
+    {
+        // Write your code here
+        int[] distance = new int[V+1];
+        Arrays.fill(distance,-1);
+        
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        
+        pq.add(new Pair(S,0));
+        
+        while(!pq.isEmpty()){
+            Pair currpair = pq.remove();
+            int currentVertex = currpair.V;
+            int curentCost = currpair.distance;
+            
+            if(distance[currentVertex] != -1)
+            continue;
+            
+            distance[currentVertex] = curentCost;
+            
+            ArrayList<ArrayList<Integer>> neighbour = adj.get(currentVertex);
+            for(ArrayList<Integer> current : neighbour){
+                int currentNeigh = current.get(0);
+                int currentEdgecost = current.get(1);
+                
+                pq.add(new Pair(currentNeigh,currentEdgecost+curentCost));
+            }
+        
+        }
+        
+        for(int i=1;i<distance.length;i++){
+      if(i!=S)
+          System.out.print(distance[i]+" ");
+       }
+        
+    }
+
+
+   private static ArrayList<ArrayList<ArrayList<Integer>>> Constructgraph(int[][] edges,int n){
+        ArrayList<ArrayList<ArrayList<Integer>>> graph = new ArrayList<>();
+
+        for(int i=0;i<=n;i++){
+            graph.add(new ArrayList<ArrayList<Integer>>());
+        }
+
+        for(int[] edge : edges){
+            int src = edge[0];
+            int dest = edge[1];
+
+            ArrayList<Integer> neigh = new ArrayList<>();
+
+            neigh.add(dest);
+            neigh.add(6);
+      graph.get(src).add(neigh);
+
+      neigh = new ArrayList<>();
+      neigh.add(src);
+            neigh.add(6);
+            graph.get(dest).add(neigh);
+        }
+
+        return graph;
+    }
+}
