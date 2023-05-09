@@ -1,0 +1,42 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        // Your Code Here
+		Scanner sc=new Scanner(System.in);
+		String s1=sc.next();
+		String s2=sc.next();
+		String s3=sc.next();
+		System.out.println(lcs(s1,s2,s3));
+
+    }
+	static int lcs(String text1, String text2,String text3)
+    {
+        // your code here
+        int[][][] dp = new int[text1.length()][text2.length()][text3.length()];
+        for(int[][]a:dp){
+            for(int[]b:a){
+				Arrays.fill(b,-1);
+			}
+        }
+
+        return lcs(text1,text2,text3,0,0,0,dp);
+    }
+    public static int lcs(String t1,String t2,String t3,int l1,int l2,int l3,int[][][] dp){
+        if(l1 >= t1.length() || l2 >= t2.length() || l3>=t3.length()){
+            return 0;
+        }
+        
+        if(dp[l1][l2][l3] != -1)
+        return dp[l1][l2][l3];
+
+        int take = 0,notake=0;
+        if(t1.charAt(l1)== t2.charAt(l2)  && t2.charAt(l2)==t3.charAt(l3)){
+            take = 1+lcs(t1,t2,t3,l1+1,l2+1,l3+1,dp);
+        }
+        else
+        notake = Math.max(lcs(t1,t2,t3,l1+1,l2,l3,dp),Math.max(lcs(t1,t2,t3,l1,l2+1,l3,dp),lcs(t1,t2,t3,l1,l2,l3+1,dp)));
+
+        return dp[l1][l2][l3] = Math.max(take,notake);
+        
+    }
+}

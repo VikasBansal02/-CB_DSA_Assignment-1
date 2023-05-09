@@ -1,0 +1,30 @@
+import java.util.*;
+
+public class Main {
+public static void main(String[] args) {
+Scanner scan = new Scanner(System.in);
+int mk1 = scan.nextInt();
+int mk52 = scan.nextInt();
+int k = scan.nextInt();
+int[] a1 = new int[mk1];
+int[] b1 = new int[mk52];
+for (int i = 0; i < mk1; i++) {
+a1[i] = scan.nextInt();
+}
+for (int i = 0; i < mk52; i++) {
+b1[i] = scan.nextInt();
+}    int[][][] arrayRem = new int[mk1+1][mk52+1][k+1];
+    for (int i = 1; i <= mk1; i++) 
+        for (int tot1 = 1; tot1 <= mk52; tot1++) {
+            for (int p = 0; p <= k; p++) {
+                arrayRem[i][tot1][p] = Math.max(arrayRem[i-1][tot1][p], arrayRem[i][tot1-1][p]);
+                if (a1[i-1] == b1[tot1-1]) 
+                    arrayRem[i][tot1][p] = Math.max(arrayRem[i][tot1][p], arrayRem[i-1][tot1-1][p] + 1);               else if (p > 0) 
+                    arrayRem[i][tot1][p] = Math.max(arrayRem[i][tot1][p], arrayRem[i-1][tot1-1][p-1] + 1);
+                
+            }
+        
+    }
+    System.out.println(arrayRem[mk1][mk52][k]);
+}
+}

@@ -1,0 +1,43 @@
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+		Scanner sc=new Scanner(System.in);
+		String s1=sc.next();
+		String s2=sc.next();
+		System.out.println(minDistance(s1,s2));
+    }
+
+	public static int minDistance(String word1, String word2) {
+        int m=word1.length();
+        int n=word2.length();
+        int[][]dp=new int[m+1][n+1];
+        for(int[]a:dp){
+            Arrays.fill(a,-1);
+        }
+        return minops(word1,word2,0,0,m,n,dp);
+        
+    }
+    private static int minops(String s1,String s2,int i,int j,int m,int n,int[][]dp){
+        if(j>=n){
+            return m-i;
+        }
+        if(i>=m){
+            return n-j;
+        }
+        int tempans=0;
+        if(dp[i][j]!=-1){
+            return dp[i][j];
+        }
+        int tmpans=0;
+        if(s1.charAt(i)==s2.charAt(j)){
+            tmpans=minops(s1,s2,i+1,j+1,m,n,dp);
+        }
+        else{
+            int insert = 1 + minops(s1, s2, i, j + 1, m, n, dp);
+            int remove = 1 + minops(s1, s2, i + 1, j, m, n, dp);
+            int replace = 1 + minops(s1, s2, i + 1, j + 1, m, n, dp);
+            tmpans=Math.min(insert,Math.min(remove,replace));
+        }
+        return dp[i][j]=tmpans;
+    }
+}
