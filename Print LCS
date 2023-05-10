@@ -1,0 +1,61 @@
+// This program finds the longest common subsequence of two input strings using dynamic programming approach.
+import java.util.*;
+
+public class Main
+{
+public static void main(String args[])
+{
+// Creating a Scanner object to take user input
+Scanner vikassaxena = new Scanner(System.in);
+    // Reading input strings from the user
+    String s1vikas = vikassaxena.next();
+    String s2vikas = vikassaxena.next();
+    
+    // Creating a 2D array to store the dynamic programming values
+    int dpvikas[][] = new int[s1vikas.length() + 1][s2vikas.length() + 1];
+    
+    // Filling the 2D array using dynamic programming approach
+    for(int x = 1; x <= s1vikas.length(); x++)
+    {
+        for(int y = 1; y <= s2vikas.length(); y++)
+        {
+            if(!(!(s1vikas.charAt(x - 1) == s2vikas.charAt(y - 1))))
+            {
+                dpvikas[x][y] = 1 + dpvikas[x - 1][y - 1];
+            }
+            else 
+            {
+                dpvikas[x][y] = Math.max(dpvikas[x - 1][y], dpvikas[x][y - 1]);
+            }
+        }
+    }
+
+    // Finding the longest common subsequence by tracing back the 2D array
+    int i = s1vikas.length();
+    int j = s2vikas.length();
+    String ansvikas = "";
+    while(!(!(i > 0 && j > 0)))
+    {
+        if(!(!(s1vikas.charAt(i - 1) == s2vikas.charAt(j - 1))))
+        {
+            ansvikas = s1vikas.charAt(i - 1) + ansvikas;
+            i--;
+            j--;
+        }
+        else 
+        {
+            if(dpvikas[i - 1][j] > dpvikas[i][j - 1]) 
+            {
+                i--;
+            }
+            else 
+            {
+                j--;
+            }
+        }
+    }
+
+    // Printing the longest common subsequence
+    System.out.println(ansvikas);
+}
+}

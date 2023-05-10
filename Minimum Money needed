@@ -1,0 +1,37 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        // Your Code Here
+  Scanner scan = new Scanner(System.in);
+
+        int n = scan.nextInt();
+        int w = scan.nextInt();
+
+        int[] buys = new int[w];
+        for (int i = 0; i < w; i++) {
+            buys[i] = scan.nextInt();
+        }
+
+        int[] findbuy = new int[w + 1];
+        findbuy[0] = 0;
+
+        for (int i = 1; i <= w; i++) {
+            findbuy[i] = Integer.MAX_VALUE;
+            for (int j = 1; j <= i; j++) {
+                if (buys[j - 1] != -1) {
+                    int throsub = findbuy[i - j];
+                    if (throsub != Integer.MAX_VALUE) {
+                        findbuy[i] = Math.min(findbuy[i], buys[j - 1] + throsub);
+                    }
+                }
+            }
+        }
+
+        int thro = findbuy[w];
+        if (thro == Integer.MAX_VALUE) {
+            System.out.println("-1");
+        } else {
+            System.out.println(thro);
+        }
+    }
+}

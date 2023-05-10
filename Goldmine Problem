@@ -1,0 +1,55 @@
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+    Scanner sc = new Scanner(System.in);
+    int t = sc.nextInt();
+    while(t-->0){
+      int n = sc.nextInt();
+      int m = sc.nextInt();
+      int[][] grid = new int[n][m];
+      for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+          grid[i][j] = sc.nextInt();
+        }
+      }
+	  System.out.println(find(grid,m,n));
+
+	  
+    }
+    }
+
+	private static int find(int[][]grid,int m,int n){
+		int[][] dp = new int[n+1][m+1];
+      	for(int[] a:dp){
+        Arrays.fill(a,-1);
+      }
+      int maxans = Integer.MIN_VALUE;
+      for(int i=0;i<n;i++){
+        maxans = Math.max(maxans,goldmax(i,0,n,m,grid,dp));
+      }
+
+      return maxans;
+	}
+      
+
+  public static int goldmax(int currentRow,int currentCol,int n,int m,int[][] grid,int[][] dp){
+    if(currentRow<0 || currentRow>=n || currentCol>=m || currentCol<0){
+            return 0;
+        }
+
+    if(currentRow==n-1 && currentCol==m-1){
+      return grid[currentRow][currentCol];
+    }
+
+    if(dp[currentRow][currentCol] != -1){
+      return dp[currentRow][currentCol];
+    }
+
+    int right = grid[currentRow][currentCol] + goldmax(currentRow,currentCol+1,n,m,grid,dp);
+    int up = grid[currentRow][currentCol] + goldmax(currentRow-1,currentCol+1,n,m,grid,dp);
+    int down = grid[currentRow][currentCol] + goldmax(currentRow+1,currentCol+1,n,m,grid,dp);
+
+    return dp[currentRow][currentCol] = Math.max(right,Math.max(up,down));
+  }
+
+}

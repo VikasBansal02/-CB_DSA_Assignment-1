@@ -1,0 +1,25 @@
+import java.util.*;
+public class Main{
+ public static void main(String args[]){
+  Scanner scan = new Scanner(System.in);
+        int m = scan.nextInt();
+        int[] arr = new int[m];
+        for(int i=0;i<m;i++)
+            arr[i] = scan.nextInt();
+        int[][] mat = new int[m][m];
+  
+        for(int i=0;i<m;i++)
+            mat[i][i] = arr[i];
+        for(int i=0;i<m-1;i++)
+            mat[i][i+1] = Math.max(arr[i],arr[i+1]);
+        for(int i=2;i<m;i++) 
+  
+            for(int j=0;j<m-i;j++){
+                int x = arr[j]+Math.min(mat[j+2][j+i],mat[j+1][j+i-1]);
+                int y = arr[j+i]+Math.min(mat[j+1][j+i-1],mat[j][j+i-2]);
+                mat[j][j+i] = Math.max(x,y);
+            }
+
+        System.out.println(mat[0][m-1]);
+ }
+}

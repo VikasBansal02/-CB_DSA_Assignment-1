@@ -1,0 +1,59 @@
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[][] matrix = new int[n][2];
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<2;j++){
+                matrix[i][j] = sc.nextInt();
+            }
+        }
+
+        ArrayList<ArrayList<Integer>> graph = Constgraph(n,matrix);
+        int[] newcolor =  new int[n];
+        Arrays.fill(newcolor,-1);
+
+        for(int curvertex=0; curvertex<n; curvertex++){
+            if(newcolor[curvertex] != -1)
+                continue;
+            if(!hasoddCycle(graph,curvertex,1,newcolor)){
+                System.out.println(0);
+                return;                
+            }
+        }
+        System.out.println(1);
+    }
+
+    public static boolean hasoddCycle(ArrayList<ArrayList<Integer>> graph,int curvertex,int currcolor,int[] newcolor){
+        if(newcolor[curvertex] != -1)
+            return ( newcolor[curvertex] == currcolor);
+        
+        newcolor[curvertex] = currcolor;
+
+        for(int currneigh : graph.get(curvertex)){
+            if(!hasoddCycle(graph,currneigh,1-currcolor,newcolor))
+                return false;
+        }
+
+        return true;
+    }
+
+    public static ArrayList<ArrayList<Integer>> Constgraph(int n,int[][] dislikes){
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+
+        for(int i=0;i<n;i++){
+            graph.add(new ArrayList<Integer>());
+        }
+        for(int[] curredge : dislikes){
+            int a = curredge[0];
+            int b = curredge[1];
+            graph.get(a).add(b);
+            graph.get(b).add(a);
+        }
+
+        return graph;
+    
+    }
+}

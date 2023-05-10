@@ -1,0 +1,58 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+    Scanner sc = new Scanner(System.in);
+    int test = sc.nextInt();
+    while(test-->0){
+      int n = sc.nextInt();
+      int numladder = sc.nextInt();
+      int numsnake = sc.nextInt();
+      int[] array = new int[(numladder+numsnake)*2];
+      int i=0;
+      for(i=0;i<numladder;i+=2){
+        array[i] = sc.nextInt();
+        array[i+1] = sc.nextInt();
+      }
+      while(i<numsnake){
+        array[i] = sc.nextInt();
+        array[i+1] = sc.nextInt();
+        i+=2;
+      }
+
+      System.out.println(minThrow(numsnake+numladder,array));
+    }
+    }
+
+  static int minThrow(int n, int array[]){
+        //create a 1d array of board
+        int[] board=new int[31];
+        Arrays.fill(board,-1);
+        for(int i=0;i<=array.length-2;i+=2){
+            board[array[i]]=array[i+1];
+        }
+        Queue < Integer > que = new LinkedList < > ();
+        que.add(1);
+        boolean[] visited = new boolean[31];
+        int move = 0;
+        while (!que.isEmpty()) {
+            int qsize = que.size();
+            for (int size = qsize; size > 0; size--) {
+                int nums = que.remove();
+                if (visited[nums]) {
+					continue;
+				}
+                visited[nums] = true;
+                if (nums == 30) {
+					return move;
+				}
+                for (int i = 1; i <= 6 && nums + i <=30; i++) {
+                    int next = nums + i;
+                    if (board[next] != -1) next = board[next];
+                    if (!visited[next]) que.offer(next);
+                }
+            }
+            move++;
+        }
+        return -1;
+    }
+}

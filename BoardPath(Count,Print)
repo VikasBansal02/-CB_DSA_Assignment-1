@@ -1,0 +1,37 @@
+import java.util.*;
+public class Main {
+   static int count = 0;
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int m = scan.nextInt();
+        int n  = scan.nextInt();
+        int[] tmp = new int[m+1];
+        find(m,n,tmp,"");
+        System.out.println();
+        System.out.println(count);
+    }
+    public static int boardpath(int m,int n,int[] tmp){
+        if(m==0){
+            return 1;
+        }
+        if(tmp[m]!=0){
+            return tmp[m];
+        }
+        int count = 0;
+        for(int i=1;i<=n && i<=m;i++){
+            count+=boardpath(m-i,n,tmp);
+        }
+        tmp[m] = count;
+        return count;
+    }
+    public static void find(int m,int n,int[] tmp,String ans){
+        if(m==0){
+            System.out.print(ans+" ");
+            count++;
+            return;
+        }
+        for(int i=1;i<=n && i<=m;i++){
+            find(m-i,n,tmp,ans+i);
+        }
+    }
+}
